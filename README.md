@@ -121,13 +121,7 @@ Heavy ML libraries may increase memory usage
 
 First request may take slightly longer
 
-💡 Future Improvements
 
-🌟 Upgrade to deep learning-based matching (BERT)
-
-📈 Advanced ATS scoring dashboard
-
-☁️ Cloud storage for resumes
 
 # 👨‍💻 Author
 
