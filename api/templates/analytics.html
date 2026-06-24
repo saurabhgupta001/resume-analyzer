@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}
+ATSPro - Analytics Dashboard
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.analytics-container{
+
+    width:100%;
+    max-width:1300px;
+    margin:30px auto;
+    padding:20px;
+
+}
+
+.hero-section{
+
+    background:linear-gradient(
+        135deg,
+        #111827,
+        #1f2937,
+        #000000
+    );
+
+    color:white;
+
+    padding:60px 35px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+
+}
+
+.hero-section h1{
+
+    font-size:42px;
+    margin-bottom:15px;
+
+}
+
+.hero-section p{
+
+    color:#d1d5db;
+    font-size:18px;
+    max-width:850px;
+    margin:auto;
+    line-height:1.8;
+
+}
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
+    margin-top:35px;
+
+}
+
+.stat-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.stat-card h2{
+
+    color:#2563eb;
+
+    font-size:18px;
+
+    margin-bottom:15px;
+
+}
+
+.stat-card h1{
+
+    color:#111827;
+
+    font-size:42px;
+
+}
+
+.chart-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(500px,1fr));
+
+    gap:30px;
+
+    margin-top:45px;
+
+}
+
+.chart-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+
+}
+
+.chart-card h2{
+
+    text-align:center;
+
+    color:#111827;
+
+    margin-bottom:20px;
+
+}
+
+.chart-card img{
+
+    width:100%;
+
+    height:auto;
+
+}
+
+@media(max-width:768px){
+
+    .hero-section{
+
+        padding:45px 20px;
+
+    }
+
+    .hero-section h1{
+
+        font-size:32px;
+
+    }
+
+    .hero-section p{
+
+        font-size:16px;
+
+    }
+
+    .chart-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:550px){
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .chart-card{
+
+        padding:18px;
+
+    }
+
+}
+
+</style>
+
+<div class="analytics-container">
+
+    <!-- Hero -->
+
+    <div class="hero-section">
+
+        <h1>
+            Resume Analytics Dashboard
+        </h1>
+
+        <p>
+
+            Monitor resume uploads, ATS scores,
+            skill analysis and job recommendations
+            using real-time analytics generated
+            from your Resume Analyzer.
+
+        </p>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <h2>Total Resumes</h2>
+
+            <h1>{{ stats.total_resumes }}</h1>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>Average ATS</h2>
+
+            <h1>{{ stats.average_ats }}</h1>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>Highest ATS</h2>
+
+            <h1>{{ stats.highest_ats }}</h1>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>Lowest ATS</h2>
+
+            <h1>{{ stats.lowest_ats }}</h1>
+
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+
+    <div class="chart-grid">
+
+        <div class="chart-card">
+
+            <h2>ATS Score Distribution</h2>
+
+            <img src="data:image/png;base64,{{ ats_chart }}" alt="ATS Chart">
+
+        </div>
+
+        <div class="chart-card">
+
+            <h2>Resume Upload Trend</h2>
+
+            <img src="data:image/png;base64,{{ upload_chart }}" alt="Upload Chart">
+
+        </div>
+
+        <div class="chart-card">
+
+            <h2>Top Resume Skills</h2>
+
+            <img src="data:image/png;base64,{{ skills_chart }}" alt="Skills Chart">
+
+        </div>
+
+        <div class="chart-card">
+
+            <h2>Most Missing Skills</h2>
+
+            <img src="data:image/png;base64,{{ missing_chart }}" alt="Missing Skills">
+
+        </div>
+
+        <div class="chart-card" style="grid-column:1/-1;">
+
+            <h2>Recommended Jobs</h2>
+
+            <img src="data:image/png;base64,{{ jobs_chart }}" alt="Jobs Chart">
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

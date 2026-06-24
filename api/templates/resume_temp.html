@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ATSPro - Resume Templates
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.templates-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:30px;
+}
+
+.page-title{
+
+    text-align:center;
+
+    font-size:48px;
+
+    margin-bottom:15px;
+}
+
+.page-title span{
+
+    background:linear-gradient(
+        90deg,
+        #38bdf8,
+        #8b5cf6
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.page-subtitle{
+
+    text-align:center;
+
+    color:#64748b;
+
+    margin-bottom:50px;
+
+    font-size:18px;
+}
+
+.section-title{
+
+    margin:50px 0 25px;
+
+    font-size:32px;
+
+    text-align:center;
+
+    color:#111827;
+}
+
+.template-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+}
+
+.template-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+}
+
+.template-card:hover{
+
+    transform:translateY(-8px);
+}
+
+.template-card img{
+
+    width:100%;
+
+    height:400px;
+
+    object-fit:contain;
+    padding:20px 0px 0px 0px;
+    
+}
+
+.template-info{
+
+    padding:18px;
+
+    text-align:center;
+}
+
+.template-info h3{
+
+    margin-bottom:10px;
+}
+
+.view-btn{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    text-decoration:none;
+}
+
+@media(max-width:768px){
+
+    .page-title{
+
+        font-size:34px;
+    }
+
+    .section-title{
+
+        font-size:26px;
+    }
+
+    .template-card img{
+
+        height:350px;
+    }
+}
+
+</style>
+
+<div class="templates-container">
+
+    <h1 class="page-title">
+        Resume <span>Templates</span>
+    </h1>
+
+    <p class="page-subtitle">
+        Choose ATS-friendly resume templates for different career levels.
+        <a href="https://www.overleaf.com/latex/templates/resume-template/ysrmnrwyrhpp"><b>click here</b></a>
+        for more ATS-friendly resume templates and professional resume creation.
+    </p>
+
+    <!-- FRESHER -->
+
+    <h2 class="section-title">
+        🎓 Fresher Templates
+    </h2>
+
+    <div class="template-grid">
+
+        {% for i in "123" %}
+
+        <div class="template-card">
+
+            <img src="/media/resume_templates/fresher{{ i }}.jpg">
+
+            <div class="template-info">
+
+                <h3>Fresher Template {{ i }}</h3>
+
+                <a href="/media/resume_templates/fresher{{ i }}.jpg"
+                   target="_blank"
+                   class="view-btn">
+
+                    View Template
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- EXPERIENCED -->
+
+    <h2 class="section-title">
+        💼 Experienced Templates
+    </h2>
+
+    <div class="template-grid">
+
+        {% for i in "123" %}
+
+        <div class="template-card">
+
+            <img src="/media/resume_templates/experienced{{ i }}.jpg">
+
+            <div class="template-info">
+
+                <h3>Experienced Template {{ i }}</h3>
+
+                <a href="/media/resume_templates/experienced{{ i }}.jpg"
+                   target="_blank"
+                   class="view-btn">
+
+                    View Template
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- PROFESSIONAL -->
+
+    <h2 class="section-title">
+        👔 Professional Templates
+    </h2>
+
+    <div class="template-grid">
+
+        {% for i in "123" %}
+
+        <div class="template-card">
+
+            <img src="/media/resume_templates/professional{{ i }}.jpg">
+
+            <div class="template-info">
+
+                <h3>Professional Template {{ i }}</h3>
+
+                <a href="/media/resume_templates/professional{{ i }}.jpg"
+                   target="_blank"
+                   class="view-btn">
+
+                    View Template
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- OTHER -->
+
+    <h2 class="section-title">
+        📄 Other Templates
+    </h2>
+
+    <div class="template-grid">
+
+        {% for i in "123" %}
+
+        <div class="template-card">
+
+            <img src="/media/resume_templates/other{{ i }}.jpg">
+
+            <div class="template-info">
+
+                <h3>Other Template {{ i }}</h3>
+
+                <a href="/media/resume_templates/other{{ i }}.jpg"
+                   target="_blank"
+                   class="view-btn">
+
+                    View Template
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

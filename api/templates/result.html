@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ block.super }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+}
+
+.container{
+    width:100%;
+    max-width:1300px;
+    margin:40px auto;
+    background:#ffffff;
+    border-radius:24px;
+    padding:40px;
+    box-shadow:0 25px 60px rgba(15,23,42,.18);
+}
+
+h1{
+    text-align:center;
+    font-size:38px;
+    color:#0f172a;
+    margin-bottom:30px;
+}
+
+.dashboard-subtitle{
+    text-align:center;
+    color:#64748b;
+    margin-bottom:40px;
+    font-size:17px;
+}
+
+.section{
+    margin-top:45px;
+    background:#ffffff;
+    border-radius:24px;
+    padding:40px;
+    box-shadow:0 25px 60px rgba(15,23,42,.18);
+}
+
+.section h2{
+    font-size:24px;
+    color:#0f172a;
+    margin-bottom:20px;
+    border-left:5px solid #2563eb;
+    padding-left:14px;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 16px;
+    margin:6px;
+    border-radius:10px;
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    background:#2563eb;
+}
+
+.error{ background:#ef4444; }
+.feedback{ background:#fef3c7; color:#92400e; }
+
+.chart-box{
+    margin-top:30px;
+    background:#ffffff;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 12px 30px rgba(15,23,42,.08);
+    overflow:hidden;
+}
+
+canvas{
+    width:100% !important;
+    height:350px !important;
+}
+
+#atsGauge{
+    width:100%;
+    height:420px;
+}
+
+@media(max-width:768px){
+    .container{ padding:20px; }
+    h1{ font-size:28px; }
+    .section{ padding:20px; }
+    canvas{ height:300px !important; }
+    #atsGauge{ height:300px; }
+}
+
+.job-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    background:#0077b6;
+    border-radius:18px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.apply-btn{
+    border:none;
+    cursor:pointer;
+    border-radius:40px;
+    padding:13px 30px;
+    color:white;
+    font-size:15px;
+    background:#03045e;
+    font-weight:bold;
+}
+
+.error-message{
+    text-align:center;
+    color:red;
+    font-size:22px;
+    margin-top:50px;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<h1>Resume Analysis Dashboard</h1>
+
+<p class="dashboard-subtitle">
+AI-powered resume evaluation with ATS score, skill analysis and career insights.
+</p>
+
+<div class="chart-box">
+    <div id="atsGauge"></div>
+</div>
+
+<div class="chart-box">
+    <canvas id="matchChart"></canvas>
+</div>
+
+<div class="chart-box">
+    <canvas id="skillPie"></canvas>
+    <p style="text-align:center; font-size:10px; color:grey; margin-top:6px;">Identified Skill Set<p>
+</div>
+
+<div id="content"></div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+try {
+
+    let rawData = null;
+
+    try {
+        rawData = localStorage.getItem("ats_result");
+    } catch (e) {
+        rawData = sessionStorage.getItem("ats_result");
+    }
+
+    if (!rawData) {
+        document.getElementById("content").innerHTML =
+            `<div class="error-message">No ATS Result Found</div>`;
+        return;
+    }
+
+    const data = JSON.parse(rawData);
+
+    console.log("ATS DATA:", data);
+
+    // ================= SAFE VALUES =================
+    const atsScore = Number(data?.ats_score ?? 0);
+    const matchScore = Number(data?.rule_based_score ?? 0);
+
+    const skills = Array.isArray(data?.resume_skills) ? data.resume_skills : [];
+    const missingSkills = Array.isArray(data?.missing_skills) ? data.missing_skills : [];
+    const errors = Array.isArray(data?.errors) ? data.errors : [];
+    const jobs = Array.isArray(data?.recommended_jobs) ? data.recommended_jobs : [];
+    const feedback = Array.isArray(data?.ai_feedback) ? data.ai_feedback : [];
+
+    // ================= GAUGE =================
+    setTimeout(() => {
+        Plotly.newPlot("atsGauge", [{
+            type: "indicator",
+            mode: "gauge+number",
+            value: atsScore,
+            title: {
+                text: "<b>ATS Score</b>",
+                font: {
+                    size: 24,
+                    color: "#1f2937",
+                    family: "Inter, Arial, sans-serif"
+                },
+                align: "center"
+            },
+            gauge: {
+                axis: { range: [0, 100] },
+                bar: { color: "#2563eb" },
+                steps: [
+                    { range: [0, 40], color: "#ef4444" },
+                    { range: [40, 70], color: "#facc15" },
+                    { range: [70, 100], color: "#22c55e" }
+                ]
+            }
+        }], {
+            margin: { t: 50, b: 20, l: 20, r: 20 }
+        });
+    }, 50);
+
+    // ================= MATCH CHART (FIXED) =================
+    setTimeout(() => {
+        const ctx = document.getElementById("matchChart");
+        if (!ctx) return;
+
+        if (window.matchChartInstance) {
+            window.matchChartInstance.destroy();
+        }
+
+        window.matchChartInstance = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["Resume Match %"],
+                datasets: [{
+                    label: "Match Score",
+                    data: [matchScore],
+                    backgroundColor: "#16a34a"
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    }, 100);
+
+    // ================= PIE CHART =================
+    setTimeout(() => {
+        new Chart(document.getElementById("skillPie"), {
+            type: "doughnut",
+            data: {
+                labels: skills,
+                datasets: [{
+                    data: skills.map(() => 1),
+                    backgroundColor: [
+                        "#2563eb","#16a34a","#f59e0b",
+                        "#ef4444","#8b5cf6","#06b6d4"
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "0%",   
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    }, 150);
+
+    // ================= UI =================
+    document.getElementById("content").innerHTML = `
+        <div class="section">
+            <h2>Resume Skills</h2>
+            ${skills.map(s => `<span class="badge">${s}</span>`).join('')}
+        </div>
+
+        <div class="section">
+            <h2>Missing Skills</h2>
+            ${
+                missingSkills.length
+                ? missingSkills.map(s => `<span class="badge error">${s}</span>`).join('')
+                : `<p>Excellent! No missing skills</p>`
+            }
+        </div>
+
+        <div class="section">
+            <h2>Errors</h2>
+            ${
+                errors.length
+                ? errors.map(e => `<span class="badge error">${e}</span>`).join('')
+                : `<p>No errors found</p>`
+            }
+        </div>
+
+        <div class="section">
+            <h2>AI Feedback</h2>
+            ${
+                feedback.length
+                ? feedback.map(f => `<span class="badge feedback">${f}</span>`).join('')
+                : `<p>No feedback</p>`
+            }
+        </div>
+
+        <div class="section">
+            <h2>Recommended Jobs</h2>
+            ${
+                jobs.length
+                ? jobs.map(job => `
+                    <div class="job-card">
+                        <span class="badge">${job}</span>
+                        <form action="/recommended-jobs/" method="GET">
+                            <input type="hidden" name="job" value="${job}">
+                            <button class="apply-btn">Apply Now</button>
+                        </form>
+                    </div>
+                `).join('')
+                : `<p>No jobs recommended</p>`
+            }
+        </div>
+    `;
+
+} catch (e) {
+    console.error(e);
+    document.getElementById("content").innerHTML =
+        `<div class="error-message">Error Loading Dashboard</div>`;
+}
+
+});
+
+</script>
+
+{% endblock %}

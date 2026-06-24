@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+    {% load static %}
+<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    
+    <title>
+        {% block title %}
+            ATSPro - Home
+        {% endblock %}
+    </title>
+    {% block head %} {% endblock %}
+    <!-- GOOGLE FONT -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#f4f7fc;
+
+            color:#111827;
+
+            min-height:100vh;
+
+            display:flex;
+
+            flex-direction:column;
+
+            overflow-x:hidden;
+        }
+
+        a{
+            text-decoration:none;
+        }
+
+        /* =====================================
+           ATTRACTIVE BLACK HEADER
+        ===================================== */
+
+        .main-header{
+
+            width:100%;
+
+            background:linear-gradient(
+                135deg,
+                #000000,
+                #111827,
+                #1f2937
+            );
+
+            position:sticky;
+
+            top:0;
+
+            z-index:1000;
+
+            box-shadow:0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        /* =====================================
+           HAMBURGER FIX
+        ===================================== */
+
+        #menu-toggle{
+            display:none;
+        }
+
+        .header-container{
+
+            width:100%;
+
+            max-width:1400px;
+
+            margin:auto;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            padding:18px 25px;
+        }
+
+        .logo{
+
+            color:white;
+
+            font-size:30px;
+
+            font-weight:700;
+
+            letter-spacing:1px;
+
+            transition:0.3s;
+        }
+
+        .logo span{
+            color:#38bdf8;
+        }
+
+        .logo:hover{
+            transform:scale(1.04);
+        }
+
+        /* =====================================
+           DESKTOP NAVIGATION
+        ===================================== */
+
+        .nav-links{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:18px;
+        }
+
+        .nav-links a{
+
+            color:#f9fafb;
+
+            font-size:15px;
+
+            font-weight:500;
+
+            padding:10px 18px;
+
+            border-radius:30px;
+
+            transition:0.3s;
+        }
+
+        .nav-links a:hover{
+
+            background:rgba(255,255,255,0.12);
+
+            transform:translateY(-2px);
+        }
+
+        .contact-btn{
+
+            background:#38bdf8;
+
+            color:#000 !important;
+
+            font-weight:600 !important;
+        }
+
+        .contact-btn:hover{
+
+            background:#0ea5e9 !important;
+
+            color:white !important;
+        }
+
+        /* =====================================
+           MOBILE MENU BUTTON
+        ===================================== */
+
+        .menu-btn{
+
+            display:none;
+
+            color:white;
+
+            font-size:28px;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .menu-btn:hover{
+            transform:scale(1.08);
+        }
+
+        /* =====================================
+           MOBILE MENU
+        ===================================== */
+
+        .mobile-menu{
+
+            display:none;
+
+            flex-direction:column;
+
+            background:#111827;
+
+            width:100%;
+
+            padding:15px 20px;
+
+            border-top:1px solid rgba(255,255,255,0.08);
+
+            animation:slideDown 0.3s ease;
+        }
+
+        .mobile-menu a{
+
+            color:white;
+
+            padding:14px 15px;
+
+            border-radius:10px;
+
+            margin-bottom:10px;
+
+            transition:0.3s;
+
+            font-size:15px;
+
+            font-weight:500;
+        }
+
+        .mobile-menu a:hover{
+
+            background:rgba(255,255,255,0.1);
+
+            padding-left:20px;
+        }
+
+        .mobile-contact{
+
+            background:#38bdf8;
+
+            color:black !important;
+
+            text-align:center;
+
+            font-weight:600 !important;
+        }
+
+        /* =====================================
+           MAIN CONTENT
+        ===================================== */
+
+        .main-content{
+
+            flex:1;
+
+            width:100%;
+
+            padding:30px 20px;
+        }
+
+        /* =====================================
+           ATTRACTIVE BLACK FOOTER
+        ===================================== */
+
+        .main-footer{
+
+            width:100%;
+
+            background:linear-gradient(
+                135deg,
+                #000000,
+                #111827,
+                #1f2937
+            );
+
+            color:white;
+
+            margin-top:60px;
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .main-footer::before{
+
+            content:"";
+
+            position:absolute;
+
+            top:-80px;
+
+            right:-80px;
+
+            width:220px;
+
+            height:220px;
+
+            background:rgba(56,189,248,0.06);
+
+            border-radius:50%;
+        }
+
+        .main-footer::after{
+
+            content:"";
+
+            position:absolute;
+
+            bottom:-100px;
+
+            left:-100px;
+
+            width:260px;
+
+            height:260px;
+
+            background:rgba(255,255,255,0.03);
+
+            border-radius:50%;
+        }
+
+        .footer-container{
+
+            position:relative;
+
+            z-index:2;
+
+            width:100%;
+
+            max-width:1400px;
+
+            margin:auto;
+
+            padding:55px 25px;
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(250px,1fr));
+
+            gap:40px;
+        }
+
+        .footer-box h2{
+
+            font-size:28px;
+
+            margin-bottom:16px;
+        }
+
+        .footer-box h2 span{
+            color:#38bdf8;
+        }
+
+        .footer-box h3{
+
+            margin-bottom:18px;
+
+            color:#38bdf8;
+
+            font-size:22px;
+        }
+
+        .footer-box p{
+
+            color:#d1d5db;
+
+            line-height:1.8;
+
+            font-size:15px;
+        }
+
+        .footer-box a{
+
+            display:block;
+
+            color:#d1d5db;
+
+            margin-bottom:12px;
+
+            transition:0.3s;
+
+            font-size:15px;
+        }
+
+        .footer-box a:hover{
+
+            color:#38bdf8;
+
+            transform:translateX(5px);
+        }
+
+        .social-icons{
+
+            display:flex;
+
+            gap:15px;
+
+            margin-top:20px;
+        }
+
+        .social-icons a{
+
+            width:42px;
+
+            height:42px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            border-radius:50%;
+
+            background:rgba(255,255,255,0.08);
+
+            color:white;
+
+            font-size:18px;
+
+            transition:0.3s;
+        }
+
+        .social-icons a:hover{
+
+            background:#38bdf8;
+
+            color:black;
+
+            transform:translateY(-4px);
+        }
+
+        .footer-bottom{
+
+            text-align:center;
+
+            padding:20px;
+
+            border-top:1px solid rgba(255,255,255,0.08);
+
+            color:#9ca3af;
+
+            font-size:14px;
+
+            background:rgba(255,255,255,0.02);
+        }
+
+        /* =====================================
+           ANIMATION
+        ===================================== */
+
+        @keyframes slideDown{
+
+            from{
+                opacity:0;
+                transform:translateY(-10px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        /* =====================================
+           TABLET RESPONSIVE
+        ===================================== */
+
+        @media(max-width:992px){
+
+            .logo{
+                font-size:26px;
+            }
+
+            .nav-links{
+                gap:10px;
+            }
+
+            .nav-links a{
+                padding:9px 14px;
+                font-size:14px;
+            }
+        }
+
+        /* =====================================
+           MOBILE RESPONSIVE
+        ===================================== */
+
+        @media(max-width:768px){
+
+            .header-container{
+                padding:16px 18px;
+            }
+
+            .nav-links{
+                display:none;
+            }
+
+            .menu-btn{
+                display:block;
+            }
+
+            /* =====================================
+               WORKING HAMBURGER MENU
+            ===================================== */
+            .nav-links{
+                display:none;
+            }
+            
+            .menu-btn{
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:transparent;
+                border:none;
+                color:#fff;
+                cursor:pointer;
+                font-size:28px;
+                padding:0;
+            }
+            
+            .mobile-menu{
+                display:none;
+                flex-direction:column;
+            }
+            
+            .mobile-menu.active{
+                display:flex;
+            }
+
+            .logo{
+                font-size:24px;
+            }
+
+            .main-content{
+                padding:20px 12px;
+            }
+
+            .footer-container{
+
+                padding:40px 18px;
+
+                gap:30px;
+            }
+
+            .footer-box h2{
+                font-size:24px;
+            }
+
+            .footer-box h3{
+                font-size:20px;
+            }
+        }
+
+        @media(max-width:480px){
+
+            .header-container{
+                padding:14px 15px;
+            }
+
+            .logo{
+                font-size:22px;
+            }
+
+            .menu-btn{
+                font-size:25px;
+            }
+
+            .mobile-menu{
+                padding:15px;
+            }
+
+            .main-content{
+                padding:15px 8px;
+            }
+
+            .footer-container{
+                padding:35px 15px;
+            }
+
+            .footer-box h2{
+                font-size:22px;
+            }
+
+            .footer-box h3{
+                font-size:18px;
+            }
+
+            .footer-box p,
+            .footer-box a{
+                font-size:14px;
+            }
+
+            .social-icons a{
+
+                width:38px;
+
+                height:38px;
+
+                font-size:16px;
+            }
+
+            .footer-bottom{
+                font-size:13px;
+            }
+        }
+
+    </style>
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="main-header">
+
+    <!-- MOBILE TOGGLE -->
+
+    <!--<input type="checkbox"
+           id="menu-toggle"> -->
+
+    <div class="header-container">
+
+        <!-- LOGO -->
+
+        <a href="/"
+           class="logo">
+
+            ATS<span>Pro</span>
+
+        </a>
+
+        <!-- DESKTOP MENU -->
+
+        <nav class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/templates/">Templates</a>
+
+            <a href="/recommended-jobs/">Jobs</a>
+            <a href="/analytics/">Live Analytics</a>
+
+            <a href="/about/">About</a>
+
+            <a href="/contact/"
+               class="contact-btn">
+
+                Contact
+
+            </a>
+
+        </nav>
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <!-- <label for="menu-toggle"
+       class="menu-btn"
+       id="menu-btn">
+
+    <i class="fa-solid fa-bars"
+       id="menu-icon"></i>
+
+</label> -->
+<button class="menu-btn" id="menu-btn">
+
+    <i class="fa-solid fa-bars" id="menu-icon"></i>
+
+</button>
+
+    </div>
+
+    <!-- MOBILE MENU -->
+
+    <div class="mobile-menu"
+     id="mobile-menu">
+
+        <a href="/">Home</a>
+
+        <a href="/templates/">Templates</a>
+
+        <a href="/recommended-jobs/">Jobs</a>
+
+        <a href="/analytics/">Live Analytics</a>
+
+        <a href="/about/">About</a>
+
+        <a href="/contact/"
+           class="mobile-contact">
+
+            📞 Contact
+
+        </a>
+
+    </div>
+
+</header>
+
+<!-- =====================================
+     MAIN CONTENT
+===================================== -->
+
+<main class="main-content">
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer class="main-footer">
+
+    <div class="footer-container">
+
+        <!-- COMPANY -->
+
+        <div class="footer-box">
+
+            <h2>
+                ATS<span>Pro</span>
+            </h2>
+
+            <p>
+
+                AI-powered ATS Resume Analyzer
+                that helps students and professionals
+                improve resumes, increase ATS scores,
+                and find better career opportunities.
+
+            </p>
+
+            <div class="social-icons">
+
+                <a href="https://www.linkedin.com/in/saurabh-gupta-42736432a/" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+
+                <a href="https://github.com/saurabhgupta001" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fab fa-twitter"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-box">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="/">Home</a>
+
+            <a href="/templates/">Templates</a>
+
+            <a href="/recommended-jobs/">Recommended Jobs</a>
+            <a href="/analytics/">Live Analytics</a>
+            <a href="/about/">About Us</a>
+            <a href="/contact/">Contact</a>
+
+        </div>
+
+        <!-- CONTACT -->
+
+        <div class="footer-box">
+
+            <h3>
+                Contact
+            </h3>
+
+            <p>
+                📧 support@atspro.com
+            </p>
+
+            <p>
+                🌐 www.atspro.com
+            </p>
+
+            <p>
+                📍 India
+            </p>
+
+            <p>
+                ☎ +91 9876543XXX
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        © 2026 ATS Resume Analyzer.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+
+{% block extra_js %}
+{% endblock %}
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+    
+        const menuBtn = document.getElementById("menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuIcon = document.getElementById("menu-icon");
+    
+        // Toggle menu
+        menuBtn.addEventListener("click", function(e){
+    
+            e.stopPropagation();
+    
+            mobileMenu.classList.toggle("active");
+    
+            if(mobileMenu.classList.contains("active")){
+                menuIcon.classList.remove("fa-bars");
+                menuIcon.classList.add("fa-xmark");
+            }else{
+                menuIcon.classList.remove("fa-xmark");
+                menuIcon.classList.add("fa-bars");
+            }
+    
+        });
+    
+        // Prevent closing when clicking inside menu
+        mobileMenu.addEventListener("click", function(e){
+            e.stopPropagation();
+        });
+    
+        // Close menu when clicking outside
+        document.addEventListener("click", function(){
+    
+            mobileMenu.classList.remove("active");
+    
+            menuIcon.classList.remove("fa-xmark");
+            menuIcon.classList.add("fa-bars");
+    
+        });
+    
+        // Close menu after clicking a link
+        document.querySelectorAll("#mobile-menu a").forEach(link=>{
+    
+            link.addEventListener("click",()=>{
+    
+                mobileMenu.classList.remove("active");
+    
+                menuIcon.classList.remove("fa-xmark");
+                menuIcon.classList.add("fa-bars");
+    
+            });
+    
+        });
+    
+    });
+    
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,397 @@
+{% extends 'base.html' %}
+{% block content %}
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ATSPro - Recommended Jobs</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:Arial,sans-serif;
+
+            background:#f4f7fc;
+        }
+
+        .container{
+
+            max-width:950px;
+
+            margin:auto;
+
+            background:rgba(255,255,255,0.08);
+
+            backdrop-filter:blur(14px);
+
+            -webkit-backdrop-filter:blur(14px);
+
+            border:1px solid rgba(255,255,255,0.1);
+
+            padding:45px;
+
+            border-radius:28px;
+
+            box-shadow:0 15px 40px rgba(0,0,0,0.35);
+
+            animation:fadeIn 0.8s ease;
+        }
+
+        /* =====================================
+           HEADING
+        ===================================== */
+
+        h1{
+
+            width:100%;
+
+            text-align:center;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            font-size:38px;
+
+            font-weight:800;
+
+            margin-bottom:40px;
+
+            word-break:break-word;
+
+            background:linear-gradient(
+                90deg,
+                #38bdf8,
+                #8b5cf6
+            );
+
+            -webkit-background-clip:text;
+
+            -webkit-text-fill-color:transparent;
+        }
+
+        /* =====================================
+           JOB LINKS
+        ===================================== */
+
+        .job-link{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            text-decoration:none;
+
+            margin-top:22px;
+
+            padding:20px;
+
+            border-radius:28px;
+
+            font-size:20px;
+
+            font-weight:bold;
+
+            transition:0.3s;
+
+            background:rgba(255,255,255,0.08);
+
+            backdrop-filter:blur(14px);
+
+            -webkit-backdrop-filter:blur(14px);
+
+            border:1px solid rgba(255,255,255,0.1);
+
+            box-shadow:0 15px 40px rgba(0,0,0,0.35);
+
+            overflow:hidden;
+
+            position:relative;
+        }
+
+        .job-link span{
+
+            background:linear-gradient(
+                90deg,
+                #38bdf8,
+                #8b5cf6
+            );
+
+            -webkit-background-clip:text;
+
+            -webkit-text-fill-color:transparent;
+
+            font-weight:700;
+        }
+
+        .job-link:hover{
+
+            transform:translateY(-4px) scale(1.01);
+
+            background:rgba(255,255,255,0.12);
+
+            box-shadow:0 18px 45px rgba(0,0,0,0.4);
+        }
+
+        /* =====================================
+           SAME STYLE FOR ALL PLATFORMS
+        ===================================== */
+
+        .linkedin,
+        .indeed,
+        .naukari,
+        .glassdoor,
+        .monster,
+        .foundit,
+        .timesjobs,
+        .shine,
+        .internshala,
+        .freshersworld,
+        .cutshort,
+        .wellfound{
+
+            background:black;
+
+            backdrop-filter:blur(14px);
+
+            -webkit-backdrop-filter:blur(14px);
+
+            border:1px solid rgba(255,255,255,0.1);
+
+            box-shadow:0 15px 40px rgba(0,0,0,0.35);
+        }
+
+        /* =====================================
+           ANIMATION
+        ===================================== */
+
+        @keyframes fadeIn{
+
+            from{
+                opacity:0;
+                transform:translateY(20px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media(max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            .container{
+                padding:28px;
+            }
+
+            h1{
+
+                font-size:28px;
+
+                line-height:1.4;
+
+                margin-bottom:30px;
+            }
+
+            .job-link{
+
+                font-size:17px;
+
+                padding:16px;
+            }
+        }
+
+        @media(max-width:480px){
+
+            body{
+                padding:10px;
+            }
+
+            .container{
+                padding:20px;
+
+                border-radius:22px;
+            }
+
+            h1{
+                font-size:24px;
+            }
+
+            .job-link{
+
+                font-size:15px;
+
+                padding:15px;
+
+                border-radius:18px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+         {{ job }}
+    </h1>
+
+    <!-- LinkedIn -->
+
+    <a class="job-link linkedin"
+       target="_blank"
+       href="https://www.linkedin.com/jobs/search/?keywords={{ job }}">
+
+        <span>Apply on LinkedIn</span>
+
+    </a>
+
+    <!-- Indeed -->
+
+    <a class="job-link indeed"
+       target="_blank"
+       href="https://in.indeed.com/jobs?q={{ job }}">
+
+        <span>Apply on Indeed</span>
+
+    </a>
+
+    <!-- Naukari -->
+
+    <a class="job-link naukari"
+       target="_blank"
+       href="https://www.naukri.com/{{ job }}-jobs">
+
+        <span>Apply on Naukari</span>
+
+    </a>
+
+    <!-- Glassdoor -->
+
+    <a class="job-link glassdoor"
+       target="_blank"
+       href="https://www.glassdoor.co.in/Job/jobs.htm?sc.keyword={{ job }}">
+
+        <span>Apply on Glassdoor</span>
+
+    </a>
+
+    <!-- Monster -->
+
+    <a class="job-link monster"
+       target="_blank"
+       href="https://www.monsterindia.com/search/{{ job }}-jobs">
+
+        <span>Apply on Monster</span>
+
+    </a>
+
+    <!-- Foundit -->
+
+    <a class="job-link foundit"
+       target="_blank"
+       href="https://www.foundit.in/srp/results?query={{ job }}">
+
+        <span>Apply on Foundit</span>
+
+    </a>
+
+    <!-- TimesJobs -->
+
+    <a class="job-link timesjobs"
+       target="_blank"
+       href="https://www.timesjobs.com/candidate/job-search.html?searchType=personalizedSearch&from=submit&txtKeywords={{ job }}">
+
+        <span>Apply on TimesJobs</span>
+
+    </a>
+
+    <!-- Shine -->
+
+    <a class="job-link shine"
+       target="_blank"
+       href="https://www.shine.com/job-search/{{ job }}-jobs">
+
+        <span>Apply on Shine</span>
+
+    </a>
+
+    <!-- Internshala -->
+
+    <a class="job-link internshala"
+       target="_blank"
+       href="https://internshala.com/jobs/{{ job }}-jobs/">
+
+        <span>Apply on Internshala</span>
+
+    </a>
+
+    <!-- Freshersworld -->
+
+    <a class="job-link freshersworld"
+       target="_blank"
+       href="https://www.freshersworld.com/jobs/jobsearch/{{ job }}-jobs">
+
+        <span>Apply on Freshersworld</span>
+
+    </a>
+
+    <!-- Cutshort -->
+
+    <a class="job-link cutshort"
+       target="_blank"
+       href="https://cutshort.io/jobs/{{ job }}">
+
+        <span>Apply on Cutshort</span>
+
+    </a>
+
+    <!-- Wellfound -->
+
+    <a class="job-link wellfound"
+       target="_blank"
+       href="https://wellfound.com/jobs">
+
+        <span>Apply on Wellfound</span>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>
+
+{% endblock %}

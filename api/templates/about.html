@@ -1,0 +1,826 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    ATSPro - About
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    .about-container{
+
+        width:100%;
+
+        max-width:1200px;
+
+        margin:30px auto;
+
+        padding:20px;
+    }
+
+    .hero-section{
+
+        background:linear-gradient(
+            135deg,
+            #111827,
+            #1f2937,
+            #000000
+        );
+
+        color:white;
+
+        padding:70px 40px;
+
+        border-radius:25px;
+
+        text-align:center;
+
+        position:relative;
+
+        overflow:hidden;
+
+        box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    .hero-section::before{
+
+        content:"";
+
+        position:absolute;
+
+        width:250px;
+
+        height:250px;
+
+        background:rgba(255,255,255,0.05);
+
+        border-radius:50%;
+
+        top:-80px;
+
+        right:-80px;
+    }
+
+    .hero-section::after{
+
+        content:"";
+
+        position:absolute;
+
+        width:200px;
+
+        height:200px;
+
+        background:rgba(56,189,248,0.08);
+
+        border-radius:50%;
+
+        bottom:-70px;
+
+        left:-70px;
+    }
+
+    .hero-section h1{
+
+        font-size:48px;
+
+        margin-bottom:20px;
+
+        position:relative;
+
+        z-index:2;
+    }
+
+    .hero-section p{
+
+        font-size:18px;
+
+        line-height:1.8;
+
+        max-width:850px;
+
+        margin:auto;
+
+        color:#d1d5db;
+
+        position:relative;
+
+        z-index:2;
+    }
+
+    .info-grid{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(auto-fit,minmax(300px,1fr));
+
+        gap:25px;
+
+        margin-top:40px;
+    }
+
+    .info-card{
+
+        background:white;
+
+        padding:30px;
+
+        border-radius:20px;
+
+        box-shadow:0 8px 25px rgba(0,0,0,0.08);
+
+        transition:0.3s;
+    }
+
+    .info-card:hover{
+
+        transform:translateY(-8px);
+    }
+
+    .info-card h2{
+
+        color:#2563eb;
+
+        margin-bottom:18px;
+
+        font-size:26px;
+    }
+
+    .info-card p{
+
+        color:#475569;
+
+        line-height:1.8;
+
+        font-size:16px;
+    }
+
+    .steps-section{
+
+        margin-top:50px;
+
+        background:white;
+
+        padding:40px;
+
+        border-radius:25px;
+
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .steps-section h2{
+
+        text-align:center;
+
+        color:#111827;
+
+        margin-bottom:40px;
+
+        font-size:36px;
+    }
+
+    .steps{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(auto-fit,minmax(250px,1fr));
+
+        gap:25px;
+    }
+
+    .step-box{
+
+        background:#f8fafc;
+
+        padding:30px;
+
+        border-radius:18px;
+
+        text-align:center;
+
+        transition:0.3s;
+    }
+
+    .step-box:hover{
+
+        background:#eff6ff;
+
+        transform:translateY(-6px);
+    }
+
+    .step-number{
+
+        width:60px;
+
+        height:60px;
+
+        margin:auto;
+
+        border-radius:50%;
+
+        background:#2563eb;
+
+        color:white;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        font-size:24px;
+
+        font-weight:bold;
+
+        margin-bottom:18px;
+    }
+
+    .step-box h3{
+
+        margin-bottom:15px;
+
+        color:#0f172a;
+
+        font-size:22px;
+    }
+
+    .step-box p{
+
+        color:#475569;
+
+        line-height:1.7;
+    }
+
+    .feature-section{
+
+        margin-top:50px;
+    }
+
+    .feature-section h2{
+
+        text-align:center;
+
+        font-size:36px;
+
+        color:#111827;
+
+        margin-bottom:35px;
+    }
+
+    .features{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(auto-fit,minmax(250px,1fr));
+
+        gap:25px;
+    }
+
+    .feature-card{
+
+        background:white;
+
+        padding:30px;
+
+        border-radius:20px;
+
+        box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
+        text-align:center;
+
+        transition:0.3s;
+    }
+
+    .feature-card:hover{
+
+        transform:translateY(-8px);
+    }
+
+    .feature-icon{
+
+        font-size:45px;
+
+        margin-bottom:20px;
+    }
+
+    .feature-card h3{
+
+        margin-bottom:15px;
+
+        color:#0f172a;
+    }
+
+    .feature-card p{
+
+        color:#64748b;
+
+        line-height:1.7;
+    }
+
+    .purpose-section{
+
+        margin-top:50px;
+
+        background:linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+        color:white;
+
+        padding:50px 35px;
+
+        border-radius:25px;
+
+        text-align:center;
+    }
+
+    .purpose-section h2{
+
+        font-size:38px;
+
+        margin-bottom:20px;
+    }
+
+    .purpose-section p{
+
+        max-width:900px;
+
+        margin:auto;
+
+        line-height:1.9;
+
+        font-size:18px;
+    }
+
+    .tips-section{
+
+        margin-top:50px;
+
+        background:white;
+
+        padding:40px;
+
+        border-radius:25px;
+
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .tips-section h2{
+
+        text-align:center;
+
+        margin-bottom:30px;
+
+        color:#111827;
+
+        font-size:34px;
+    }
+
+    .tips-list{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(auto-fit,minmax(280px,1fr));
+
+        gap:20px;
+    }
+
+    .tip{
+
+        background:#f8fafc;
+
+        padding:22px;
+
+        border-radius:16px;
+
+        color:#334155;
+
+        font-size:16px;
+
+        line-height:1.7;
+
+        transition:0.3s;
+    }
+
+    .tip:hover{
+
+        background:#eff6ff;
+
+        transform:translateY(-5px);
+    }
+
+    @media(max-width:768px){
+
+        .hero-section{
+
+            padding:50px 25px;
+        }
+
+        .hero-section h1{
+
+            font-size:34px;
+        }
+
+        .hero-section p{
+
+            font-size:16px;
+        }
+
+        .steps-section,
+        .tips-section{
+
+            padding:25px;
+        }
+
+        .steps-section h2,
+        .feature-section h2,
+        .tips-section h2,
+        .purpose-section h2{
+
+            font-size:28px;
+        }
+    }
+
+    @media(max-width:480px){
+
+        .hero-section h1{
+
+            font-size:28px;
+        }
+
+        .hero-section p{
+
+            font-size:15px;
+        }
+
+        .info-card,
+        .feature-card,
+        .step-box{
+
+            padding:22px;
+        }
+
+        .purpose-section{
+
+            padding:35px 20px;
+        }
+
+        .purpose-section p{
+
+            font-size:16px;
+        }
+    }
+
+</style>
+
+<div class="about-container">
+
+    <!-- HERO SECTION -->
+
+    <div class="hero-section">
+
+        <h1>
+            About ATS Resume Analyzer
+        </h1>
+
+        <p>
+
+            ATS Resume Analyzer is an AI-powered web application designed to help students, 
+            freshers, and professionals optimize their resumes for Applicant Tracking Systems (ATS). 
+            The platform analyzes resumes, matches them against job descriptions, calculates ATS scores,
+             identifies missing skills, provides AI-driven feedback, and recommends relevant job opportunities 
+             from multiple job portals. The website is freely accessible without any login or 
+             registration, allowing users to instantly analyze their resumes and improve their chances 
+             of getting shortlisted by recruiters.
+
+        </p>
+
+    </div>
+
+    <!-- INFORMATION CARDS -->
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <h2>
+                What is ATS?
+            </h2>
+
+            <p>
+
+                ATS stands for Applicant Tracking System.
+                Many companies use ATS software to filter resumes
+                before they reach recruiters. If a resume does not
+                contain relevant keywords or proper formatting,
+                it may get rejected automatically.
+
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h2>
+                Purpose of This Website
+            </h2>
+
+            <p>
+
+                The main goal of this project is to help users
+                increase their chances of getting shortlisted
+                for jobs by improving ATS compatibility and
+                identifying important resume improvements.
+
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h2>
+                AI-Powered Analysis
+            </h2>
+
+            <p>
+
+                The system uses AI and keyword matching techniques
+                to analyze resumes against job descriptions,
+                calculate match percentages, suggest improvements,
+                and provide personalized feedback.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- HOW IT WORKS -->
+
+    <div class="steps-section">
+
+        <h2>
+            How It Works
+        </h2>
+
+        <div class="steps">
+
+            <div class="step-box">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <h3>
+                    Upload Resume
+                </h3>
+
+                <p>
+
+                    Upload your resume file directly on the website
+                    in supported format.
+
+                </p>
+
+            </div>
+
+            <div class="step-box">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <h3>
+                    Paste Job Description
+                </h3>
+
+                <p>
+
+                    Enter the job description of the role
+                    you want to apply for.
+
+                </p>
+
+            </div>
+
+            <div class="step-box">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <h3>
+                    Analyze Resume
+                </h3>
+
+                <p>
+
+                    The AI engine checks ATS score,
+                    matching skills, errors,
+                    and missing keywords.
+
+                </p>
+
+            </div>
+
+            <div class="step-box">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <h3>
+                    Apply for Jobs
+                </h3>
+
+                <p>
+
+                    Get recommended job roles and apply
+                    directly through LinkedIn, Indeed,
+                    Naukari, and more platforms.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FEATURES -->
+
+    <div class="feature-section">
+
+        <h2>
+            Key Features
+        </h2>
+
+        <div class="features">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📄
+                </div>
+
+                <h3>
+                    Resume Analysis
+                </h3>
+
+                <p>
+
+                    Smart ATS score calculation and
+                    resume evaluation.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Interactive Dashboard
+                </h3>
+
+                <p>
+
+                    Beautiful charts and visual reports
+                    for better understanding.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <h3>
+                    Job Recommendations
+                </h3>
+
+                <p>
+
+                    Personalized job suggestions based
+                    on resume skills.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    AI Feedback
+                </h3>
+
+                <p>
+
+                    AI-generated suggestions to improve
+                    resume quality and ATS performance.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PURPOSE -->
+
+    <div class="purpose-section">
+
+        <h2>
+            Why This Project Matters
+        </h2>
+
+        <p>
+
+            Many talented candidates lose opportunities because
+            their resumes are not optimized for ATS systems.
+            This project bridges the gap between recruiters and
+            job seekers by helping users create stronger,
+            ATS-friendly resumes and improve job application success.
+
+        </p>
+
+    </div>
+
+    <!-- TIPS -->
+
+    <div class="tips-section">
+
+        <h2>
+            Tips for Better ATS Score
+        </h2>
+
+        <div class="tips-list">
+
+            <div class="tip">
+
+                ✅ Use keywords from the job description
+                naturally inside your resume.
+
+            </div>
+
+            <div class="tip">
+
+                ✅ Keep resume formatting simple and clean.
+
+            </div>
+
+            <div class="tip">
+
+                ✅ Add relevant technical and soft skills.
+
+            </div>
+
+            <div class="tip">
+
+                ✅ Avoid images, tables, and complex layouts.
+
+            </div>
+
+            <div class="tip">
+
+                ✅ Update your resume according to each job role.
+
+            </div>
+
+            <div class="tip">
+
+                ✅ Add measurable achievements and projects.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
