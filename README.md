@@ -3,6 +3,8 @@
 
 ATSPro is an AI-powered Resume Analyzer built with Django + Machine Learning (scikit-learn + spaCy) that evaluates resumes against job descriptions and provides an ATS score, skill matching, missing skills, and improvement feedback.
 
+It also provides personalized job role recommendations based on extracted skills, helping users understand their career fit and improve their resumes effectively.
+
 # 🚀 Live Demo
 
 👉 https://atspro-pwzi.onrender.com
