@@ -1,8 +1,10 @@
+import spacy
+
+nlp = spacy.load("en_core_web_sm")
 
 
 def preprocess_text(text):
-    import spacy
-    nlp = spacy.load("en_core_web_sm")
+    
     doc = nlp(text.lower())
 
     cleaned_tokens = []
