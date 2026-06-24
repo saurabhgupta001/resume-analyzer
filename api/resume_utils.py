@@ -1,5 +1,5 @@
 import pdfplumber
-import docx
+from docx import Document
 import re
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -44,7 +44,7 @@ def extract_docx_text(file_path):
 
     try:
 
-        doc = docx.Document(file_path)
+        doc = Document(file_path)
 
         for para in doc.paragraphs:
 
